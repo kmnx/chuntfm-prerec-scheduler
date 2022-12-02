@@ -9,3 +9,8 @@
 3. `. venv/bin/activate & pip install -r requirements.txt`
 4. Create config.ini and prerec.liq (see templates)
 5. Run on production server or test using `flask run`
+
+
+```diff
+- WARNING Do not run in production without login check
+```
