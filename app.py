@@ -124,12 +124,12 @@ def delete_prerec_play_by_id(id):
         scheduler.remove_job(id)
 
         if request.method == 'GET':
-            return redirect(url_for('.list_sheduled_prerecs', page=True, delete_success=True, job_name=id))
+            return redirect(url_for('.list_sheduled_prerecs', _external=True, page=True, delete_success=True, job_name=id))
         else:
             return "Pre-recorded play deleted from scheduler"
     except Exception as e:
         if request.method == 'GET':
-            return redirect(url_for('.list_sheduled_prerecs', page=True, delete_error=True, job_name=id))
+            return redirect(url_for('.list_sheduled_prerecs', _external=True, page=True, delete_error=True, job_name=id))
         else:
             return str(e)
 
