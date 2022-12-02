@@ -1,0 +1,7 @@
+prerec = playlist("prerec.m3u", loop=false)
+
+output.icecast(%mp3(stereo=true,id3v2=true),
+     host = "", port = 42600,
+     password = "", mount = "stream", icy_metadata="true", icy_id=1,
+     description = "Pre-recording", fallible = true, on_stop=shutdown,
+     prerec)

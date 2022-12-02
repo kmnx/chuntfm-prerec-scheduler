@@ -1,0 +1,6 @@
+[DEFAULT]
+
+title = ChuntFM pre-rec scheduler
+
+# seconds to subtract from start times to allow for recording to start
+liq_setup_time = 15
