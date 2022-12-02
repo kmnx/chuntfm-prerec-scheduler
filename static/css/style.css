@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Puddles&family=Rubik:wght@400;700&display=swap');
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rubik Puddles';
+}
+
+body {
+    font-family: 'Rubik' !important;
+
+}
+
+font-rubik-puddles {
+    font-family: 'Rubik Puddles' !important;
+}
+
+.required label {
+    font-weight: bold;
+}
+.required label:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+}
+

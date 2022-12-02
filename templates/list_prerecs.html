@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+
+{% block precontent %}
+
+    {%  if delete_success %}
+
+            <div class = "row mt-1">
+                        <div class = "col-md-1">
+
+            </div>
+                <div class = "col-md-10">
+                    <div class="alert alert-success" role="alert">
+                    "{{  job_name }}" deleted successfully!
+                    </div>
+                </div>
+                        <div class = "col-md-1">
+
+            </div>
+            </div>
+
+    {% elif error %}
+
+        <div class = "row mt-1 justify-content-center">
+            <div class = "col-md-1">
+
+            </div>
+                <div class = "col-md-10">
+                    <div class="alert alert-danger" role="alert">
+                    Error: "{{  error_message }}"!
+                    </div>
+                </div>
+            <div class = "col-md-1">
+
+            </div>
+            </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+
+            <table class="table table-striped table-hover">
+
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">URI</th>
+                        <th scope="col">Start time</th>
+                        <th scope="col">Stop after</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td>{{ job.name }}</td>
+                        <td class="text-truncate" style="max-width: calc( 30 * 1vw )">{{ job.args[0] }}</td>
+                        <td>{{ job.next_run_time }}</td>
+                        <td>{% if job.args[1] %}{{ job.args[1]/60 }} min{% else %}playout{% endif %}</td>
+                        <td class="text-end"><a class="fw-bold font-monospace text-decoration-none text-danger" href="delete/{{ job.id }}">DELETE</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+
+            <div class="d-grid gap-2 mt-1">
+                <a class="btn btn-outline-dark" type="button" href="add">Schedule a pre-rec play</a>
+                <a class="btn btn-outline-dark" type="button" href="{{ url_for('list_sheduled_prerecs') }}?page=true">List scheduled pre-rec plays</a>
+            </div>
+
+
+{% endblock %}

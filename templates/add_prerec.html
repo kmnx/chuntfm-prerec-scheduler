@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block precontent %}
+
+    {%  if success %}
+
+            <div class = "row mt-1">
+                        <div class = "col-md-1">
+
+            </div>
+                <div class = "col-md-10">
+                    <div class="alert alert-success" role="alert">
+                    "{{  job_name }}" added successfully!
+                    </div>
+                </div>
+                        <div class = "col-md-1">
+
+            </div>
+            </div>
+
+    {% elif error %}
+
+        <div class = "row mt-1 justify-content-center">
+            <div class = "col-md-1">
+
+            </div>
+                <div class = "col-md-10">
+                    <div class="alert alert-danger" role="alert">
+                    Error: "{{  error_message }}"!
+                    </div>
+                </div>
+            <div class = "col-md-1">
+
+            </div>
+            </div>
+
+    {% endif %}
+
+{% endblock %}
+
+
+
+{%  block content %}
+            <form action="/add?form=true" method="post">
+              <div class="mb-3 required">
+                <label for="prerecName" >Title</label>
+                <input name = "name" type="text" class="form-control" id="prerecName" aria-describedby="" placeholder="Enter pre-rec title" required="true">
+              </div>
+
+              <div class="row mb-3">
+                <div class="col required">
+                    <label for="startDate" >Start</label>
+                    <input name = "start_time" id="startDate" class="form-control" type="datetime-local" required="true" />
+                </div>
+                <div class="col">
+                    <label for="stopDate">Stop</label>
+                    <input name = "stop_time" id="stopDate" class="form-control" aria-describedby="stopDateHelp" type="datetime-local" />
+                    <div id="stopDateHelp" class="form-text">Enter a stop date to stop the pre-rec playback after the stated time or leave empty to play pre-rec in full.</div>
+                </div>
+              </div>
+
+              <div class="mb-3 required">
+                <label for="fileURI" >File URI</label>
+                <input name = "file_path" type="text" class="form-control" id="fileURI" aria-describedby="fileURIHelp" placeholder="File URI" required="true">
+                <div id="fileURIHelp" class="form-text">Enter a URI for a file within the pre-rec folder on the server or for a file on the internet.</div>
+              </div>
+
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+
+            </form>
+
+
+
+
+
+{% endblock %}
