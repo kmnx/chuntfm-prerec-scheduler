@@ -12,5 +12,5 @@
 
 
 ```diff
-- WARNING Do not run in production without login check
+- WARNING Do not run in production without user login
 ```
