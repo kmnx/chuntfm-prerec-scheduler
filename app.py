@@ -6,6 +6,7 @@ import subprocess
 import logging
 import configparser
 
+# @TODO: add users/login
 
 jobstores = {
     'default': SQLAlchemyJobStore(url='sqlite:///jobs.sqlite')
@@ -17,8 +18,9 @@ jobstores = {
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-
+# configure app
 app = Flask(__name__)
+
 
 app.config['title'] = config['DEFAULT']['title']
 
@@ -71,6 +73,8 @@ def add_prerec_play(setup_time = 15):
             else:
                 file_path = data['file_path']
 
+
+
             #
             if 'start_time' not in data:
                 return 'start_time not supplied'
@@ -81,6 +85,19 @@ def add_prerec_play(setup_time = 15):
                 stop_time = data['stop_time']
             else:
                 stop_time = None
+
+            if 'is_stream' not in data:
+                is_stream = False
+            else:
+                is_stream = data['is_stream']
+
+                if is_stream == 'true':
+                    is_stream = True
+                else:
+                    is_stream = False
+
+                if is_stream and stop_time is None:
+                    raise Exception('Stop time must bet set for streams')
 
             #convert to datetime
 
@@ -101,7 +118,7 @@ def add_prerec_play(setup_time = 15):
 
 
             # add start job to scheduler
-            scheduler.add_job(stream_file, 'date', name=job_name, run_date=start_date_time, args=[file_path, stop_seconds])
+            scheduler.add_job(stream_file, 'date', name=job_name, run_date=start_date_time, args=[file_path, stop_seconds, is_stream])
 
             if form_post:
                 return render_template('add_prerec.html', success=True, job_name=job_name)
@@ -158,14 +175,20 @@ def list_sheduled_prerecs():
 
 
 
-def stream_file(file_path, stop_after = None):
+def stream_file(file_path, stop_after = None, is_stream = False):
 
     # write prerec file path to prerec.m3u
     with open('prerec.m3u', 'w') as f:
         f.write(file_path)
 
+
     # stream the audio file using a subsprocess and liquidsoap
-    subprocess.check_output(['liquidsoap', 'prerec.liq'], timeout=stop_after)
+
+    if (is_stream):
+        subprocess.check_output(['liquidsoap', 'prerec-stream.liq'], timeout=stop_after)
+    else:
+        subprocess.check_output(['liquidsoap', 'prerec.liq'], timeout=stop_after)
+
 
 
 if __name__ == '__main__':

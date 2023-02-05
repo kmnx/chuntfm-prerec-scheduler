@@ -1,7 +1,7 @@
-settings.log.file.path.set("prerec.log")
+settings.log.file.path.set("prerec-stream.log")
 settings.log.file.append.set(true)
 
-prerec = playlist("prerec.m3u", loop=false)
+prerec = input.http(file.contents('prerec.m3u'))
 
 output.icecast(%mp3(stereo=true,id3v2=true),
      host = "", port = 42600,
