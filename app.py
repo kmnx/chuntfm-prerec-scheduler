@@ -73,15 +73,13 @@ def add_prerec_play(setup_time = 15):
             else:
                 file_path = data['file_path']
 
-
-
             #
             if 'start_time' not in data:
                 return 'start_time not supplied'
             else:
                 start_time = data['start_time']
 
-            if 'stop_time' in data:
+            if 'stop_time' in data and data['stop_time'] != '':
                 stop_time = data['stop_time']
             else:
                 stop_time = None
@@ -89,15 +87,9 @@ def add_prerec_play(setup_time = 15):
             if 'is_stream' not in data:
                 is_stream = False
             else:
-                is_stream = data['is_stream']
+                is_stream = True
 
-                if is_stream == 'true':
-                    is_stream = True
-                else:
-                    is_stream = False
 
-                if is_stream and stop_time is None:
-                    raise Exception('Stop time must bet set for streams')
 
             #convert to datetime
 
@@ -105,6 +97,10 @@ def add_prerec_play(setup_time = 15):
 
             # add setup time to start time
             start_date_time = start_date_time - timedelta(seconds=int(config['DEFAULT']['liq_setup_time']))
+
+
+            if is_stream and stop_time is None:
+                raise Exception('Stop time must bet set for streams')
 
             if stop_time is not None and stop_time != '':
                 stop_date_time = datetime.strptime(stop_time, '%Y-%m-%dT%H:%M')
@@ -115,6 +111,8 @@ def add_prerec_play(setup_time = 15):
 
             else:
                 stop_seconds = None
+
+
 
 
             # add start job to scheduler
