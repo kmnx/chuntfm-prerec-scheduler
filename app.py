@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import subprocess
 import logging
 import configparser
+import os
 
 # @TODO: add users/login
 
@@ -23,6 +24,9 @@ app = Flask(__name__)
 
 
 app.config['title'] = config['DEFAULT']['title']
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'uploads')
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
 
 # initialize scheduler with your preferred timezone
 scheduler = BackgroundScheduler({'apscheduler.timezone': 'Europe/London'}, jobstores=jobstores)
@@ -170,6 +174,18 @@ def list_sheduled_prerecs():
         return render_template('list_prerecs.html', jobs=jobs, **args)
     else:
         return jobs
+    
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return 'No file part'
+    file = request.files['file']
+    if file.filename == '':
+        return 'No selected file'
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return 'File uploaded successfully'
 
 
 

@@ -59,6 +59,14 @@
                 </div>
               </div>
 
+              <form action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="fileUpload" class="form-label">Upload MP3</label>
+                    <input type="file" class="form-control" id="fileUpload" name="file">
+                </div>
+                <button type="submit" class="btn btn-primary mb-3">Upload</button>
+              </form>
+
               <div class="mb-3 required">
                 <label for="fileURI" >File URI</label>
                 <input name = "file_path" type="text" class="form-control" id="fileURI" aria-describedby="fileURIHelp" placeholder="File URI" required="true">
