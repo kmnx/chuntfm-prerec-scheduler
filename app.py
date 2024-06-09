@@ -52,8 +52,9 @@ def add_prerec_play(setup_time = 15):
             if 'file' in request.files:
                 file = request.files['file']
                 if file.filename != '':
-                    filename = secure_filename(file.filename)
+                    filename = file.filename
                     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    print(f"Saving file to {file_path}")  # Debug print statement
                     file.save(file_path)
                     form_post = True
 
