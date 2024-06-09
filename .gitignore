@@ -2,7 +2,8 @@
 *.sqlite
 config.ini
 *.m3u
-
+prerec.liq
+prerec-stream.liq
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/

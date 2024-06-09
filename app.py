@@ -182,8 +182,8 @@ def upload_file():
     file = request.files['file']
     if file.filename == '':
         return 'No selected file'
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
+    if file:
+        filename = file.filename
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return 'File uploaded successfully'
 
