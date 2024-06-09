@@ -43,25 +43,25 @@ def index():
 def add_prerec_play(setup_time = 15):
 
     try:
-
         if request.method == 'GET':
-
-            #@TODO show form to add prerecs
-
             return render_template('add_prerec.html')
 
         elif request.method == 'POST':
-
             form_post = False
 
-            if request.args.get('form') is not None:
+            if 'file' in request.files:
+                file = request.files['file']
+                if file.filename != '':
+                    filename = secure_filename(file.filename)
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    form_post = True
 
+            if form_post or request.args.get('form') is not None:
                 form_post = True
 
                 # get the form data
-                data = request.form
-
-                data = data.to_dict()
+                data = request.form.to_dict()
 
             else:
 
