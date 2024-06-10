@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, redirect, url_for
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
+from werkzeug.middleware.proxy_fix import ProxyFix
+
 from datetime import datetime, timedelta
 import subprocess
 import logging
@@ -22,6 +24,7 @@ config.read('config.ini')
 # configure app
 app = Flask(__name__)
 
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 app.config['title'] = config['DEFAULT']['title']
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'uploads')
