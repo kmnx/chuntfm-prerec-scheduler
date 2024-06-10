@@ -2,6 +2,9 @@
 *.sqlite
 config.ini
 *.m3u
+*.mp3
+*.wav
+*.flac
 prerec.liq
 prerec-stream.liq
 ### Python template

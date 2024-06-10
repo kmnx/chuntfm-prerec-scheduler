@@ -42,7 +42,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/add', methods=['GET', 'POST'])
+@app.route('/add', methods=['GET', 'POST'], endpoint='add')
 def add_prerec_play(setup_time = 15):
 
     try:
